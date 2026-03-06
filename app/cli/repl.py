@@ -25,8 +25,7 @@ def dispatch(canvas: Canvas, raw: str) -> str | object:
 
 
 def run_repl(canvas: Canvas) -> None:
-    "Бесконечный цикл ввода. Введи exit или Ctrl+C."
-    print('Векторный редактор. Введи help или exit.')
+    print('Векторный редактор. Команды по help / Выход exit.')
 
     while True:
         try:
