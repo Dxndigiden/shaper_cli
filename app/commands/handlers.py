@@ -41,9 +41,9 @@ def cmd_remove(canvas: Canvas, tokens: list[str]) -> str:
 def cmd_list(canvas: Canvas, _tokens: list[str]) -> str:
     "list — показать все фигцры"
     if canvas.is_empty():
-        return 'Добавь что-то через add.'
+        return 'Список пуст. Нужн что-то через add.'
 
-    lines = ['Фигуры на холсте:']
+    lines = ['Фигуры:']
     lines += [f'  {s}' for s in canvas.all()]
     return '\n'.join(lines)
 
