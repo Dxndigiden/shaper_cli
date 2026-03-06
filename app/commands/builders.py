@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.models.base import Point, Shape
+from app.models.base import Point
 from app.models.shapes import Circle, PointShape, Segment, Square
 
 
