@@ -39,6 +39,4 @@ python main.py
 pytest
 ```
 
----
-
 Автор — [Dxndigiden](https://github.com/Dxndigiden)

@@ -33,7 +33,7 @@ def cmd_remove(canvas: Canvas, tokens: list[str]) -> str:
 
     removed = canvas.remove(tokens[0])
     if removed is None:
-        return f'Фигура с id «{tokens[0]}» не найдена'
+        return f'Фигура id «{tokens[0]}» не найдена'
 
     return f'Удалена: {removed}'
 
