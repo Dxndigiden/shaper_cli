@@ -36,7 +36,7 @@ python main.py
 
 ```bash
 
-pytest tests/
+pytest
 ```
 
 ---
