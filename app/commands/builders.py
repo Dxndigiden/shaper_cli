@@ -1,7 +1,14 @@
 from __future__ import annotations
 
 from app.models.base import Point
-from app.models.shapes import Circle, PointShape, Segment, Square
+from app.models.shapes import (
+    Circle,
+    Oval,
+    PointShape,
+    Rectangle,
+    Segment,
+    Square,
+)
 
 
 def _floats(tokens: list[str], names: list[str]) -> list[float]:
@@ -38,6 +45,18 @@ def build_square(tokens: list[str]) -> Square:
     return Square(origin=Point(x, y), side=side)
 
 
+def build_oval(tokens: list[str]) -> Oval:
+    "oval cx cy rx ry"
+    cx, cy, rx, ry = _floats(tokens, ['cx', 'cy', 'rx', 'ry'])
+    return Oval(center=Point(cx, cy), rx=rx, ry=ry)
+
+
+def build_rectangle(tokens: list[str]) -> Rectangle:
+    "rect x y width height"
+    x, y, w, h = _floats(tokens, ['x', 'y', 'width', 'height'])
+    return Rectangle(origin=Point(x, y), width=w, height=h)
+
+
 ShapeBuilder = type(build_point)
 
 SHAPE_BUILDERS: dict[str, 'ShapeBuilder'] = {
@@ -45,4 +64,6 @@ SHAPE_BUILDERS: dict[str, 'ShapeBuilder'] = {
     'segment': build_segment,
     'circle': build_circle,
     'square': build_square,
+    'oval': build_oval,
+    'rect': build_rectangle,
 }
