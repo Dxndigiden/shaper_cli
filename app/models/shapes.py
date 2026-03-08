@@ -82,3 +82,59 @@ class Square(Shape):
 
     def describe(self) -> str:
         return f'угол {self.origin}, сторона={self.side}, площадь={self.area}'
+
+
+@dataclass
+class Oval(Shape):
+    "Овал."
+
+    type_label: ClassVar[str] = 'Овал'
+    center: Point
+    rx: float
+    ry: float
+
+    def __post_init__(self) -> None:
+        if self.rx <= 0 or self.ry <= 0:
+            raise ValueError('Полуоси должны быть > 0')
+        super().__init__()
+
+    @property
+    def area(self) -> float:
+        return round(math.pi * self.rx * self.ry, 4)
+
+    def describe(self) -> str:
+        return (
+            f'центр {self.center}, '
+            f'rx={self.rx}, ry={self.ry}, '
+            f'площадь≈{self.area}'
+        )
+
+
+@dataclass
+class Rectangle(Shape):
+    "Прямоугольник."
+
+    type_label: ClassVar[str] = 'Прямоугольник'
+    origin: Point
+    width: float
+    height: float
+
+    def __post_init__(self) -> None:
+        if self.width <= 0 or self.height <= 0:
+            raise ValueError('Ширина и высота должны быть > 0')
+        super().__init__()
+
+    @property
+    def area(self) -> float:
+        return round(self.width * self.height, 4)
+
+    @property
+    def perimeter(self) -> float:
+        return round(2 * (self.width + self.height), 4)
+
+    def describe(self) -> str:
+        return (
+            f'угол {self.origin}, '
+            f'ширина={self.width}, высота={self.height}, '
+            f'площадь={self.area}, периметр={self.perimeter}'
+        )
