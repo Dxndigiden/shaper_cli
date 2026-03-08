@@ -92,8 +92,8 @@ def cmd_help(_canvas: Canvas, _tokens: list[str]) -> str:
         '  add square  <x> <y> <side>\n'
         '  add oval    <cx> <cy> <rx> <ry>\n'
         '  add rect    <x> <y> <width> <height>\n'
-        '  list\n'
         '  remove <id>\n'
+        '  list\n'
         '  save   <имя_файла.json>\n'
         '  load   <имя_файла.json>\n'
         '  help\n'
@@ -103,8 +103,8 @@ def cmd_help(_canvas: Canvas, _tokens: list[str]) -> str:
 
 COMMANDS: dict[str, 'CommandHandler'] = {
     'add': cmd_add,
-    'list': cmd_list,
     'remove': cmd_remove,
+    'list': cmd_list,
     'save': cmd_save,
     'load': cmd_load,
     'help': cmd_help,
