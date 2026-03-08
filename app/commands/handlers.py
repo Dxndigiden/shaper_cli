@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from app.canvas import serializer
 from app.canvas.canvas import Canvas
 from app.commands.builders import SHAPE_BUILDERS
 
@@ -39,13 +40,46 @@ def cmd_remove(canvas: Canvas, tokens: list[str]) -> str:
 
 
 def cmd_list(canvas: Canvas, _tokens: list[str]) -> str:
-    "list — показать все фигцры"
+    "list показать все фигцры"
     if canvas.is_empty():
         return 'Список пуст. Нужн что-то через add.'
 
     lines = ['Фигуры:']
     lines += [f'  {s}' for s in canvas.all()]
     return '\n'.join(lines)
+
+
+def cmd_save(canvas: Canvas, tokens: list[str]) -> str:
+    "save <имя_файла> сохранить фигуры в JSON"
+    if not tokens:
+        return 'Укажи имя файла, например save shapes.json'
+
+    path = tokens[0]
+    try:
+        serializer.save(canvas.all(), path)
+    except OSError as exc:
+        return f'Ошибка при сохранении: {exc}'
+
+    return f'Сохранено {len(canvas.all())} фигур → {path}'
+
+
+def cmd_load(canvas: Canvas, tokens: list[str]) -> str:
+    "load <имя_файла> загрузить фигуры из JSON"
+    if not tokens:
+        return 'Укажи имя файла, например load shapes.json'
+
+    path = tokens[0]
+    try:
+        shapes = serializer.load(path)
+    except FileNotFoundError:
+        return f'Файл «{path}» не найден'
+    except (ValueError, KeyError) as exc:
+        return f'Ошибка при загрузке: {exc}'
+
+    for shape in shapes:
+        canvas.add(shape)
+
+    return f'Загружено {len(shapes)} фгур из {path}'
 
 
 def cmd_help(_canvas: Canvas, _tokens: list[str]) -> str:
@@ -56,8 +90,12 @@ def cmd_help(_canvas: Canvas, _tokens: list[str]) -> str:
         '  add segment <x1> <y1> <x2> <y2>\n'
         '  add circle  <cx> <cy> <r>\n'
         '  add square  <x> <y> <side>\n'
-        '  list\n'
+        '  add oval    <cx> <cy> <rx> <ry>\n'
+        '  add rect    <x> <y> <width> <height>\n'
         '  remove <id>\n'
+        '  list\n'
+        '  save   <имя_файла.json>\n'
+        '  load   <имя_файла.json>\n'
         '  help\n'
         '  exit'
     )
@@ -65,8 +103,10 @@ def cmd_help(_canvas: Canvas, _tokens: list[str]) -> str:
 
 COMMANDS: dict[str, 'CommandHandler'] = {
     'add': cmd_add,
-    'list': cmd_list,
     'remove': cmd_remove,
+    'list': cmd_list,
+    'save': cmd_save,
+    'load': cmd_load,
     'help': cmd_help,
 }
 
