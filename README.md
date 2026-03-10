@@ -14,7 +14,8 @@
 
 ## Установка и запуск
 
-Нужен только Python 3.10+, зависимости только для тестов (pip install pytest).
+Нужен только Python 3.10+, 
+зависимости только для тестов (pip install pytest).
 
 ```bash
 git clone https://github.com/Dxndigiden/shaper_cli.git
